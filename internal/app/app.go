@@ -4,13 +4,15 @@ import (
 	controller2 "REST/internal/controller"
 	thermometer2 "REST/internal/infrastructure/thermometer"
 	"REST/internal/usecases"
+	"REST/pkg/memorycache"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 func RunApp() {
 	thermometer := thermometer2.New()
-	cache:=
-	useCase := usecases.New(thermometer)
+	cache := memorycache.New(time.Second*10, 0)
+	useCase := usecases.New(thermometer, cache)
 	controller := controller2.New(useCase)
 	server := new(controller2.Server)
 	router := controller.InitRouter()
