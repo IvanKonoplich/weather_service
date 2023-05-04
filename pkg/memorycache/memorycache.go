@@ -2,6 +2,7 @@ package memorycache
 
 import (
 	"errors"
+	"github.com/sirupsen/logrus"
 	"sync"
 	"time"
 )
@@ -61,7 +62,7 @@ func (c *Cache) Set(key string, value interface{}, duration time.Duration) {
 		Expiration: expiration,
 		Created:    time.Now(),
 	}
-
+	logrus.Infof("value %f cached", value)
 }
 
 func (c *Cache) Get(key string) (interface{}, bool) {
@@ -86,7 +87,7 @@ func (c *Cache) Get(key string) (interface{}, bool) {
 		}
 
 	}
-
+	logrus.Infof("value %f reterned from cache", item)
 	return item.Value, true
 }
 

@@ -1,13 +1,11 @@
 package usecases
 
-import "time"
-
 type Thermometer interface {
 	GetTemperature() (float32, error)
 }
 type Cache interface {
-	Get(key string) (interface{}, bool)
-	Set(key string, value interface{}, duration time.Duration)
+	Get() (float32, bool, error)
+	Set(temperature float32) error
 }
 type UseCase struct {
 	tm    Thermometer

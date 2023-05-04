@@ -3,7 +3,7 @@ package usecases
 import "REST/internal/entities"
 
 func (uc *UseCase) GetWeather() (entities.WeatherNow, error) {
-	currentTemperature, ok, err := uc.cache.GetTemperatureFromCache()
+	currentTemperature, ok, err := uc.cache.Get()
 	if err != nil {
 		return entities.WeatherNow{}, err
 	}
@@ -14,7 +14,7 @@ func (uc *UseCase) GetWeather() (entities.WeatherNow, error) {
 	if err != nil {
 		return entities.WeatherNow{}, err
 	}
-	uc.cache.UpdateCache(currentTemperature)
+	err = uc.cache.Set(currentTemperature)
 	if err != nil {
 		return entities.WeatherNow{}, err
 	}
